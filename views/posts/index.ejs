@@ -1,0 +1,173 @@
+<% layout("layouts/boilerplate")%>
+
+<style>
+    body {
+        background: #f4f7f6;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        font-weight: 600;
+        color: #2f4f4f;
+    }
+
+    .card-container {
+        display: flex;
+        gap: 35px;
+        padding: 40px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .post {
+        width: 360px;
+        background: #ffffff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.12);
+    }
+
+    .user {
+        padding: 15px 18px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #1f6f54;
+        background: linear-gradient(90deg, #e8f5e9, #f1f8f6);
+    }
+
+    .img-box {
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+    }
+
+    .img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .post:hover .img-box img {
+        transform: scale(1.08);
+    }
+
+    .content {
+        padding: 18px;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #444;
+        flex-grow: 1;
+    }
+
+    .meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: #777;
+        padding: 0 18px 12px;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 18px 18px;
+    }
+
+    .actions button {
+        background: #e53935;
+        color: #fff;
+        border: none;
+        padding: 7px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .actions button:hover {
+        background: #c62828;
+    }
+
+    .actions a {
+        text-decoration: none;
+        font-size: 13px;
+        color: #1f6f54;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .actions a:hover {
+        color: #145a3c;
+    }
+
+    form button {
+        background: linear-gradient(135deg, #1f6f54, #2fa36b);
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 25px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    form button:hover {
+        transform: scale(1.05);
+    }
+    
+</style>
+
+
+
+<h1>All posts</h1>
+
+<form action="/posts/new" method="get">
+        <button>Create Post</button>
+</form>
+
+<div class="card-container">
+    <%for(let post of posts){ %>
+        <div class="post">
+            <div class="user">
+                <div class="avatar">
+                    <%= post.username.charAt(0).toUpperCase() %>
+                </div>
+                <span>@<%= post.username %></span>
+            </div>
+
+
+            <div class="img-box">
+                <img class="post-img" src="<%= post.img %>" alt="img">
+            </div>
+
+            <div class="content">
+                <p><%= post.content %></p>
+            </div>
+
+            <div class="meta">
+                <span>📅 <%= post.created_at.toString().split(" ").slice(0,4).join(" ") %></span>
+                <span>⏰ <%= post.created_at.toString().split(" ")[4] %></span>
+            </div>
+
+            <div class="actions">
+                <form action="/posts/<%= post._id %>/edit" method="get">
+                    <button>Edit Experience</button>
+                </form>
+                <form action="/posts/<%= post._id %>?_method=DELETE" method="post">
+                    <button>Delete</button>
+                </form>
+            </div>
+        </div>
+    <% } %>
+</div>
