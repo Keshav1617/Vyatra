@@ -1,23 +1,85 @@
 <% layout("layouts/boilerplate") %>
 
 <style>
+  body {
+    background: #f6f7f9;
+  }
+
+  /* CONTAINER */
   .show-container {
     max-width: 1200px;
     margin: 30px auto;
     padding: 0 20px;
-    font-family: Inter, sans-serif;
+    font-family: Inter, system-ui, sans-serif;
   }
 
-  /* HEADER */
+  /* HEADER ROW */
+  .show-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
   .show-header h1 {
     font-size: 28px;
     font-weight: 600;
+    margin: 0;
   }
 
   .sub-header {
     margin-top: 6px;
-    color: #555;
     font-size: 15px;
+    color: #555;
+  }
+
+  /* ACTION BUTTON GROUP */
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .action-buttons form {
+    margin: 0;
+  }
+
+  .action-buttons a,
+  .action-buttons button {
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* EDIT BUTTON */
+  .btn-edit {
+    background: #f1f5f9;
+    color: #1e293b;
+  }
+
+  .btn-edit:hover {
+    background: #e2e8f0;
+    transform: translateY(-1px);
+  }
+
+  /* DELETE BUTTON */
+  .btn-delete {
+    background: linear-gradient(135deg, #ff4d4f, #d9363e);
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(217, 54, 62, 0.35);
+  }
+
+  .btn-delete:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(217, 54, 62, 0.45);
   }
 
   /* IMAGE GRID */
@@ -73,7 +135,7 @@
     position: sticky;
     top: 90px;
     height: fit-content;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   }
 
   .price {
@@ -134,16 +196,39 @@
       position: static;
     }
   }
+
+  @media (max-width: 600px) {
+    .show-header-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  }
 </style>
 
 <div class="show-container">
 
   <!-- HEADER -->
-  <div class="show-header">
-    <h1><%= listing.title %></h1>
-    <p class="sub-header">
-      <%= listing.location %>, <%= listing.country %>
-    </p>
+  <div class="show-header-row">
+    <div class="show-header">
+      <h1><%= listing.title %></h1>
+      <p class="sub-header">
+        <%= listing.location %>, <%= listing.country %>
+      </p>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="action-buttons">
+      <a href="/listings/<%= listing._id %>/edit" class="btn-edit">
+        Edit
+      </a>
+
+      <form action="/listings/<%= listing._id %>?_method=DELETE" method="post">
+        <button type="submit" class="btn-delete">
+          Delete
+        </button>
+      </form>
+    </div>
   </div>
 
   <!-- IMAGE GRID -->
@@ -161,9 +246,7 @@
     <!-- LEFT -->
     <div class="details">
       <h2>Entire rental unit</h2>
-      <p class="meta">
-        2 guests · 1 bedroom · 1 bed · 1 bathroom
-      </p>
+      <p class="meta">2 guests · 1 bedroom · 1 bed · 1 bathroom</p>
 
       <p class="description">
         <%= listing.description || "A beautiful stay curated for comfort, peace, and a premium experience." %>
@@ -173,7 +256,8 @@
     <!-- RIGHT -->
     <div class="booking-card">
       <p class="price">
-        ₹<%= listing.price %> <span>for 2 nights</span>
+        ₹<%= listing.price.toLocaleString("en-IN") %>
+        <span>for 2 nights</span>
       </p>
 
       <div class="date-box">
@@ -181,9 +265,7 @@
         <div>CHECK-OUT<br><strong>08/02/2026</strong></div>
       </div>
 
-      <button class="reserve-btn">
-        Reserve
-      </button>
+      <button class="reserve-btn">Reserve</button>
     </div>
 
   </div>

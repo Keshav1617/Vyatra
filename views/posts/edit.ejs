@@ -150,22 +150,22 @@
     
         <div class="form-group">
             <label>Username</label>
-            <input type="text" name="username" value="<%= post.username %>" required>
+            <input type="text" name="post[username]" value="<%= post.username %>" required>
         </div>
     
         <div class="form-group">
             <label>Write content</label>
-            <textarea name="content" required><%= post.content %></textarea>
+            <textarea name="post[content]" required><%= post.content %></textarea>
         </div>
 
         <div class="form-group">
             <label for="">Location</label>
-            <input type="text" name = "location" value="<%= post.location%>" required>
+            <input type="text" name = "post[location]" value="<%= post.location%>" required>
         </div>
 
         <div class="form-group">
             <label>Country</label>
-            <input type="text" name = "country" value="<%= post.country%>" required>
+            <input type="text" name = "post[country]" value="<%= post.country%>" required>
         </div>
     
         <button type="submit">Update Post</button>

@@ -36,7 +36,22 @@ async function main() {
 app.get("/listings" , async(req , res) => {
     let alllistings = await Listing.find({});
     res.render("listing/index.ejs" , {alllistings});
-})
+});
+
+
+// New Route
+app.get("/listings/new" , (req , res) => {
+    res.render("listing/new.ejs");
+});
+
+
+// Create Route 
+app.post("/listings" , async (req , res) => {
+    let newlisting = new Listing(req.body.listing);
+    await newlisting.save();
+    res.redirect("/listings");
+});
+
 
 // show Route
 app.get("/listings/:id" , async (req , res) => {
@@ -46,7 +61,33 @@ app.get("/listings/:id" , async (req , res) => {
     }
     let listing = await Listing.findById(id); 
     res.render("listing/show.ejs" , {listing});
+});
+
+
+// Edit Route
+app.get("/listings/:id/edit" , async (req , res) => {
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listing/edit.ejs" , {listing});
+});
+
+// update Route
+app.put("/listings/:id" , async(req,res) => {
+    let {id} = req.params;
+    let updatedListing = await Listing.findByIdAndUpdate(id , req.body.listing , {runValidators : true , new : true});
+    res.redirect("/listings");
 })
+
+
+// destroy Route
+app.delete("/listings/:id" , async(req , res) => {
+    let {id} = req.params;
+    let deletedListing = await Listing.findByIdAndDelete(id);
+    res.redirect("/listings");
+})
+
+
+
 
 
 
@@ -69,26 +110,9 @@ app.get("/posts/new" , (req , res) => {
 })
 
 // Create Route
-app.post("/posts" , (req , res) => {
-    let {username , content , location , country} = req.body;
-    let img = "https://media.gettyimages.com/id/1466653322/photo/close-up-woman-planting-a-young-fir-tree-in-the-forest-putting-it-down-on-the-ground.jpg?s=612x612&w=0&k=20&c=6B_xWx9GiHJzz24ilUUz-dfhPnY4iujhSYWj9aFzkVg="
-    let newpost = new Post({
-        username : username,
-        img : img,
-        content : content,
-        location : location,
-        country : country,
-    });
-
-    // this is an async process hai but we don't need to use async and await here as whenever we use then() , then js automatically know's that this is an async process.
-    newpost
-        .save()
-        .then((res) => {
-            console.log("Chat was Saved");
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+app.post("/posts" , async (req , res) => {
+    let newpost = new Post(req.body.post);
+    await newpost.save();
     res.redirect("/posts");
 });
 
@@ -107,15 +131,8 @@ app.get("/posts/:id/edit" , async (req , res) => {
 // Update Route
 app.put("/posts/:id" , async (req , res) => {
     let {id} = req.params;
-    let {username , content , location , country} = req.body;
-    let updatedPost = {
-        username : username,
-        content : content,
-        location : location,
-        country : country,
-    }
-    let post = await Post.findByIdAndUpdate(id , updatedPost , {runValidators : true , new : true});
-    if (!post) {
+    let updatedpost = await Post.findByIdAndUpdate(id , req.body.post , {runValidators : true , new : true});
+    if (!updatedpost) {
         return res.status(404).send("Post not found");
     }
     res.redirect("/posts");
