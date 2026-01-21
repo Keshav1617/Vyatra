@@ -1,3 +1,51 @@
-<footer>
-    
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- BRAND -->
+    <div class="footer-brand">
+      <div class="footer-logo">V</div>
+      <h3>Vyatra</h3>
+      <p>
+        Discover unique stays, explore nature, and experience travel like never before.
+      </p>
+    </div>
+
+    <!-- LINKS -->
+    <div class="footer-links">
+      <h4>Explore</h4>
+      <a href="/listings">All Listings</a>
+      <a href="/listings/new">Create Listing</a>
+      <a href="#">Experiences</a>
+      <a href="#">About Us</a>
+    </div>
+
+    <div class="footer-links">
+      <h4>Support</h4>
+      <a href="#">Help Center</a>
+      <a href="#">Safety Information</a>
+      <a href="#">Cancellation Policy</a>
+      <a href="#">Contact Us</a>
+    </div>
+
+    <!-- SOCIAL -->
+    <div class="footer-social">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#" aria-label="Instagram">📸</a>
+        <a href="#" aria-label="Twitter">🐦</a>
+        <a href="#" aria-label="LinkedIn">💼</a>
+        <a href="#" aria-label="GitHub">🐙</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> Vyatra. All rights reserved.</p>
+  </div>
 </footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>

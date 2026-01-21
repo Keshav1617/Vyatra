@@ -76,8 +76,10 @@ app.put("/listings/:id" , async(req,res) => {
     let {id} = req.params;
     let updatedListing = await Listing.findByIdAndUpdate(id , req.body.listing , {runValidators : true , new : true});
     res.redirect("/listings");
-})
+});
 
+
+// Search Route
 
 // destroy Route
 app.delete("/listings/:id" , async(req , res) => {
