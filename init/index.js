@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
+
 const initListing = require("./listing");
 const intiPost = require("./post");
 const initState = require("./state");
 const initNature = require("./nature");
+
 const Listing = require("../models/listing");
 const Post = require("../models/post");
 const NatureEntity = require("../models/natureEntity");
@@ -24,45 +26,38 @@ const normalize = (str) => str.trim().toLowerCase();
 
 const initDB = async () => {
     try{
+        // Clean Database
         await Listing.deleteMany({});
         await Post.deleteMany({});
         await NatureEntity.deleteMany({});
         await State.deleteMany({});
 
-        await Listing.insertMany(initListing.data);
-        await Post.insertMany(intiPost.data);
-
-
+        // inserting state first so that we can create statemap
         const insertedStates = await State.insertMany(initState);
 
+        // Creating state map 
         const stateMap = {};
         insertedStates.forEach(state => {
             stateMap[normalize(state.name)] = state._id;
         });
 
-        const finalNatureData = initNature.data.map(item => {
-        const { stateName, ...rest } = item;
+        // Prepare listings with state objectId
+        const finalListing = initListing.sampleListings(stateMap);
+        await Listing.insertMany(finalListing);
 
-        const stateId = stateMap[normalize(stateName)];
-        if (!stateId) {
-            throw new Error(`❌ Invalid stateName in nature data: ${stateName}`);
-        }
+        // Insert Post
+        await Post.insertMany(intiPost.data);
 
-        return {
-            ...rest,
-            state: stateId
-        };
-        });
-
+        const finalNatureData = initNature.natureEntities(stateMap);
         await NatureEntity.insertMany(finalNatureData);
-    }
-    catch(err){
-        console.error("❌ Error initializing DB:", err.message);
-    }
-    finally{
+
+        console.log("Data was initialised successfully");
+
+    } catch (err) {
+        console.error("Error initializing DB:", err.message);
+    } finally {
         mongoose.connection.close();
     }
-    console.log("Data was Initialised");
 }
 
 initDB();

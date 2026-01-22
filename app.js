@@ -5,6 +5,10 @@ const path = require("path");
 const mongoose = require("mongoose");
 const Post = require("./models/post");
 const Listing = require("./models/listing");
+const NatureEntity = require("./models/natureEntity");
+const State = require("./models/state");
+
+
 
 const app = express();
 const port = 8080;
@@ -53,6 +57,33 @@ app.post("/listings" , async (req , res) => {
 });
 
 
+// Search Route
+app.get("/listings/search" , async (req , res) => {
+    try{
+        const {state} = req.query;
+        if(!state){
+            return res.redirect("/listings");
+        }
+        const normalizedState = state.trim();
+        const stateDoc = await State.findOne({
+            name: new RegExp(`^${normalizedState}$`, "i")  // i -> case insenstive  ^ (caret) -> Start of the string  $(dollar)-> End of the string
+        });
+
+        
+        if (!stateDoc) {
+            return res.redirect("/listings");
+        }
+        const listings = await Listing.find({ state : stateDoc._id}).populate("state");
+        res.render("listing/search.ejs" , {listings , searchedState : stateDoc.name });
+
+    }catch(err){
+        console.error(err);
+        req.flash("error", "Something went wrong");
+        res.redirect("/listings");
+    }
+});
+
+
 // show Route
 app.get("/listings/:id" , async (req , res) => {
     let {id} = req.params;
@@ -77,9 +108,6 @@ app.put("/listings/:id" , async(req,res) => {
     let updatedListing = await Listing.findByIdAndUpdate(id , req.body.listing , {runValidators : true , new : true});
     res.redirect("/listings");
 });
-
-
-// Search Route
 
 // destroy Route
 app.delete("/listings/:id" , async(req , res) => {

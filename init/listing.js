@@ -1,11 +1,12 @@
-const sampleListings = [
+const sampleListings = (stateMap) => [
   {
     title: "Mechuka Valley Retreat",
     description: "A peaceful valley surrounded by snow-capped mountains and Buddhist monasteries.",
-    img: "https://img-cdn.publive.online/filters:format(webp)/filters:format(webp)/english-betterindia/media/media_files/2025/12/26/dzongu-04-2025-12-26-19-23-19.jpg",
+    img: "https://img-cdn.publive.online/filters:format(webp)/english-betterindia/media/media_files/2025/12/26/dzongu-04-2025-12-26-19-23-19.jpg",
     price: 4500,
     country: "India",
-    location: "Mechuka, Arunachal Pradesh"
+    state: stateMap["arunachal pradesh"],
+    city: "Mechuka"
   },
   {
     title: "Spiti River Camp",
@@ -13,7 +14,8 @@ const sampleListings = [
     img: "https://www.emperortraveline.com/wp-content/uploads/2024/08/spiti-cover-1024x561.webp",
     price: 3200,
     country: "India",
-    location: "Spiti Valley, Himachal Pradesh"
+    state: stateMap["himachal pradesh"],
+    city: "Spiti Valley"
   },
   {
     title: "Rann of Kutch Desert Stay",
@@ -21,7 +23,8 @@ const sampleListings = [
     img: "https://soultravelindia.com/wp-content/uploads/2021/10/1_Diphlu-River-Lodge-Bedroom.jpg",
     price: 5000,
     country: "India",
-    location: "Kutch, Gujarat"
+    state: stateMap["gujarat"],
+    city: "Kutch"
   },
   {
     title: "Munnar Tea Garden Cottage",
@@ -29,31 +32,35 @@ const sampleListings = [
     img: "https://static.toiimg.com/thumb/msid-102357947,width-748,height-499,resizemode=4,imgsize-83072/Thenmala-Kerala.jpg",
     price: 3800,
     country: "India",
-    location: "Munnar, Kerala"
+    state: stateMap["kerala"],
+    city: "Munnar"
   },
   {
     title: "Ziro Valley Homestay",
     description: "Tribal culture and scenic rice fields surrounded by hills.",
-    img: "https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2022/04/Savandurga-Hill-Karnataka.jpg?resize=1200,900&ssl=1",
+    img: "https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2022/04/Savandurga-Hill-Karnataka.jpg",
     price: 2800,
     country: "India",
-    location: "Ziro, Arunachal Pradesh"
+    state: stateMap["arunachal pradesh"],
+    city: "Ziro"
   },
   {
     title: "Coorg Coffee Estate Stay",
     description: "Luxury stay amid coffee plantations with forest views.",
-    img: "https://static.toiimg.com/thumb/109792797/ITC-Maurya.jpg?width=636&height=358&resize=4",
+    img: "https://static.toiimg.com/thumb/109792797/ITC-Maurya.jpg",
     price: 4200,
     country: "India",
-    location: "Coorg, Karnataka"
+    state: stateMap["karnataka"],
+    city: "Coorg"
   },
   {
     title: "Ladakh Mountain Camp",
     description: "High-altitude camping experience with stunning Himalayan landscapes.",
-    img: "https://img-cdn.publive.online/filters:format(webp)/filters:format(webp)/english-betterindia/media/media_files/2025/12/26/dzongu-04-2025-12-26-19-23-19.jpg",
+    img: "https://img-cdn.publive.online/filters:format(webp)/english-betterindia/media/media_files/2025/12/26/dzongu-04-2025-12-26-19-23-19.jpg",
     price: 6000,
     country: "India",
-    location: "Leh, Ladakh"
+    state: stateMap["ladakh"],
+    city: "Leh"
   },
   {
     title: "Chopta Forest Hut",
@@ -61,7 +68,8 @@ const sampleListings = [
     img: "https://res.cloudinary.com/worldpackers/image/upload/c_limit,f_auto,q_auto,w_1140/qticr4gptrkhnqzfi0q0",
     price: 2500,
     country: "India",
-    location: "Chopta, Uttarakhand"
+    state: stateMap["uttarakhand"],
+    city: "Chopta"
   },
   {
     title: "Sundarbans Mangrove Stay",
@@ -69,15 +77,17 @@ const sampleListings = [
     img: "https://soultravelindia.com/wp-content/uploads/2021/10/1_Diphlu-River-Lodge-Bedroom.jpg",
     price: 3500,
     country: "India",
-    location: "Sundarbans, West Bengal"
+    state: stateMap["west bengal"],
+    city: "Sundarbans"
   },
   {
     title: "Andaman Beach Resort",
     description: "Private beach resort with crystal clear water views.",
-    img: "https://static.toiimg.com/thumb/109792651/Spice-Village-CGH-Earth.jpg?width=636&height=358&resize=4",
+    img: "https://static.toiimg.com/thumb/109792651/Spice-Village-CGH-Earth.jpg",
     price: 7000,
     country: "India",
-    location: "Havelock Island, Andaman"
+    state: stateMap["andaman and nicobar islands"],
+    city: "Havelock Island"
   },
   {
     title: "Tawang Monastery View Lodge",
@@ -85,7 +95,8 @@ const sampleListings = [
     img: "https://hblimg.mmtcdn.com/content/hubble/img/uttarakhand/mmt/destination/m_destination-uttarakhand-landscape_l_400_640.jpg",
     price: 4000,
     country: "India",
-    location: "Tawang, Arunachal Pradesh"
+    state: stateMap["arunachal pradesh"],
+    city: "Tawang"
   },
   {
     title: "Kasol Riverside Camp",
@@ -93,7 +104,8 @@ const sampleListings = [
     img: "https://s7ap1.scene7.com/is/image/incredibleindia/lingdum-monastery-gangtok-sikkim-1-attr-hero?qlt=82&ts=1742166048831",
     price: 3000,
     country: "India",
-    location: "Kasol, Himachal Pradesh"
+    state: stateMap["himachal pradesh"],
+    city: "Kasol"
   },
   {
     title: "Valley of Flowers Stay",
@@ -101,7 +113,8 @@ const sampleListings = [
     img: "https://www.emperortraveline.com/wp-content/uploads/2024/08/spiti-cover-1024x561.webp",
     price: 3600,
     country: "India",
-    location: "Chamoli, Uttarakhand"
+    state: stateMap["uttarakhand"],
+    city: "Chamoli"
   },
   {
     title: "Mount Abu Hill Resort",
@@ -109,15 +122,17 @@ const sampleListings = [
     img: "https://www.clubmahindra.com/blog/images/Himachal-Pradesh-resized2.jpg",
     price: 3400,
     country: "India",
-    location: "Mount Abu, Rajasthan"
+    state: stateMap["rajasthan"],
+    city: "Mount Abu"
   },
   {
     title: "Mahabaleshwar Forest Resort",
     description: "Strawberry fields and dense forests all around.",
-    img: "https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2022/04/Savandurga-Hill-Karnataka.jpg?resize=1200,900&ssl=1",
+    img: "https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2022/04/Savandurga-Hill-Karnataka.jpg",
     price: 3900,
     country: "India",
-    location: "Mahabaleshwar, Maharashtra"
+    state: stateMap["maharashtra"],
+    city: "Mahabaleshwar"
   },
   {
     title: "Ooty Lake View Cottage",
@@ -125,7 +140,8 @@ const sampleListings = [
     img: "https://res.cloudinary.com/worldpackers/image/upload/c_limit,f_auto,q_auto,w_1140/qticr4gptrkhnqzfi0q0",
     price: 3100,
     country: "India",
-    location: "Ooty, Tamil Nadu"
+    state: stateMap["tamil nadu"],
+    city: "Ooty"
   },
   {
     title: "Dzukou Valley Camp",
@@ -133,7 +149,8 @@ const sampleListings = [
     img: "https://hblimg.mmtcdn.com/content/hubble/img/uttarakhand/mmt/destination/m_destination-uttarakhand-landscape_l_400_640.jpg",
     price: 2800,
     country: "India",
-    location: "Nagaland"
+    state: stateMap["nagaland"],
+    city: "Dzukou Valley"
   },
   {
     title: "Kodaikanal Pine Forest Stay",
@@ -141,7 +158,8 @@ const sampleListings = [
     img: "https://s7ap1.scene7.com/is/image/incredibleindia/pithoragarh-rural-hero?qlt=82&ts=1726643529094",
     price: 3300,
     country: "India",
-    location: "Kodaikanal, Tamil Nadu"
+    state: stateMap["tamil nadu"],
+    city: "Kodaikanal"
   },
   {
     title: "Jim Corbett Jungle Lodge",
@@ -149,7 +167,8 @@ const sampleListings = [
     img: "https://s7ap1.scene7.com/is/image/incredibleindia/lingdum-monastery-gangtok-sikkim-1-attr-hero?qlt=82&ts=1742166048831",
     price: 5500,
     country: "India",
-    location: "Jim Corbett, Uttarakhand"
+    state: stateMap["uttarakhand"],
+    city: "Jim Corbett"
   },
   {
     title: "Alleppey Backwater Houseboat",
@@ -157,15 +176,17 @@ const sampleListings = [
     img: "https://www.clubmahindra.com/blog/images/Himachal-Pradesh-resized2.jpg",
     price: 8000,
     country: "India",
-    location: "Alleppey, Kerala"
+    state: stateMap["kerala"],
+    city: "Alleppey"
   },
   {
     title: "Rishikesh Riverside Ashram Stay",
     description: "Peaceful yoga and meditation stay by the Ganga.",
-    img: "https://static.toiimg.com/thumb/109792651/Spice-Village-CGH-Earth.jpg?width=636&height=358&resize=4",
+    img: "https://static.toiimg.com/thumb/109792651/Spice-Village-CGH-Earth.jpg",
     price: 2200,
     country: "India",
-    location: "Rishikesh, Uttarakhand"
+    state: stateMap["uttarakhand"],
+    city: "Rishikesh"
   },
   {
     title: "Cherrapunji Waterfall Homestay",
@@ -173,7 +194,8 @@ const sampleListings = [
     img: "https://www.incredibleindia.gov.in/content/dam/incredible-india/images/arunachal-pradesh/external-blogs/likabali-to-mechuka/Likabali-to-Mechuka1-popular.jpeg",
     price: 2700,
     country: "India",
-    location: "Cherrapunji, Meghalaya"
+    state: stateMap["meghalaya"],
+    city: "Cherrapunji"
   },
   {
     title: "Shillong Hill View Hotel",
@@ -181,15 +203,17 @@ const sampleListings = [
     img: "https://hblimg.mmtcdn.com/content/hubble/img/states_img/mmt/activities/m_Manipur_landscape_1_l_444_1000.jpg",
     price: 3600,
     country: "India",
-    location: "Shillong, Meghalaya"
+    state: stateMap["meghalaya"],
+    city: "Shillong"
   },
   {
     title: "Pangong Lake Camp",
     description: "Luxury tents beside the iconic blue lake.",
-    img: "https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2022/04/Savandurga-Hill-Karnataka.jpg?resize=1200,900&ssl=1",
+    img: "https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2022/04/Savandurga-Hill-Karnataka.jpg",
     price: 6500,
     country: "India",
-    location: "Pangong, Ladakh"
+    state: stateMap["ladakh"],
+    city: "Pangong"
   },
   {
     title: "Bir Billing Paragliding Stay",
@@ -197,7 +221,8 @@ const sampleListings = [
     img: "https://s7ap1.scene7.com/is/image/incredibleindia/pithoragarh-rural-hero?qlt=82&ts=1726643529094",
     price: 2900,
     country: "India",
-    location: "Bir, Himachal Pradesh"
+    state: stateMap["himachal pradesh"],
+    city: "Bir"
   },
   {
     title: "Pushkar Desert Camp",
@@ -205,7 +230,8 @@ const sampleListings = [
     img: "https://static.toiimg.com/thumb/msid-102357947,width-748,height-499,resizemode=4,imgsize-83072/Thenmala-Kerala.jpg",
     price: 4100,
     country: "India",
-    location: "Pushkar, Rajasthan"
+    state: stateMap["rajasthan"],
+    city: "Pushkar"
   },
   {
     title: "Auli Ski Resort",
@@ -213,7 +239,8 @@ const sampleListings = [
     img: "https://www.indianholiday.com/wordpress/wp-content/uploads/2018/05/Lahaul-Spiti-Himachal-Prad.jpg",
     price: 5200,
     country: "India",
-    location: "Auli, Uttarakhand"
+    state: stateMap["uttarakhand"],
+    city: "Auli"
   },
   {
     title: "Nainital Lake View Hotel",
@@ -221,7 +248,8 @@ const sampleListings = [
     img: "https://www.incredibleindia.gov.in/content/dam/incredible-india/images/arunachal-pradesh/external-blogs/likabali-to-mechuka/Likabali-to-Mechuka1-popular.jpeg",
     price: 3700,
     country: "India",
-    location: "Nainital, Uttarakhand"
+    state: stateMap["uttarakhand"],
+    city: "Nainital"
   },
   {
     title: "Gokarna Beach Hut",
@@ -229,7 +257,8 @@ const sampleListings = [
     img: "https://hblimg.mmtcdn.com/content/hubble/img/states_img/mmt/activities/m_Manipur_landscape_1_l_444_1000.jpg",
     price: 2600,
     country: "India",
-    location: "Gokarna, Karnataka"
+    state: stateMap["karnataka"],
+    city: "Gokarna"
   },
   {
     title: "Tirthan Valley Riverside Stay",
@@ -237,8 +266,22 @@ const sampleListings = [
     img: "https://www.indianholiday.com/wordpress/wp-content/uploads/2018/05/Lahaul-Spiti-Himachal-Prad.jpg",
     price: 3000,
     country: "India",
-    location: "Tirthan Valley, Himachal Pradesh"
+    state: stateMap["himachal pradesh"],
+    city: "Tirthan Valley"
   }
 ];
 
-module.exports = {data : sampleListings};
+module.exports = { sampleListings };
+
+
+
+// stateMap is a lookup table (JavaScript object):
+// {
+//   "Uttarakhand": ObjectId("65b8c..."),
+//   "Kerala": ObjectId("65b8d..."),
+//   "Himachal Pradesh": ObjectId("65b8e...")
+// }
+// Meaning:
+// “If I know the state name, give me its ObjectId.”
+
+// to init our listing index.js has the logic how to map each state of listing.js with state id of state.js

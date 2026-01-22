@@ -32,6 +32,22 @@ const statesData = [
     }
   },
   {
+  name: "Ladakh",
+  code: "LA",
+  location: {
+    type: "Point",
+    coordinates: [77.5619, 34.2268]
+    }
+  },
+  {
+  name: "Andaman and Nicobar Islands",
+  code: "AN",
+  location: {
+    type: "Point",
+    coordinates: [92.6586, 11.7401]
+    }
+  },
+  {
     name: "Chhattisgarh",
     code: "CG",
     location: {

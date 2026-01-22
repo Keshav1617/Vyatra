@@ -39,12 +39,8 @@
       </ul>
 
       <!-- SEARCH -->
-      <form class="navbar-search me-4 d-none d-lg-flex">
-        <input
-          type="text"
-          class="search-input"
-          placeholder="Search destinations"
-        />
+      <form class="navbar-search me-4 d-none d-lg-flex"  method="get" action="/listings/search">
+        <input type="text" name="state" class="search-input"placeholder="Search destinations"/>
         <button type="submit" class="search-btn">
           🔍
         </button>

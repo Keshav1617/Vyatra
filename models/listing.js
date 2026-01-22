@@ -19,8 +19,17 @@ let listingSchema = new Schema({
     },
     country: {
         type : String,
+        default : "India",
     },
-    location: {
+
+    state: {
+        type: Schema.Types.ObjectId,
+        ref: "State",
+        required: true,
+        index: true,  // “Create an index on the state field in the listings collection.”  state_id  → [listing1, listing2, listing3]
+    },
+
+    city: {
         type : String,
     }
 });
