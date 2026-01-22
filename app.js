@@ -8,8 +8,6 @@ const Listing = require("./models/listing");
 const NatureEntity = require("./models/natureEntity");
 const State = require("./models/state");
 
-
-
 const app = express();
 const port = 8080;
 
@@ -44,8 +42,9 @@ app.get("/listings" , async(req , res) => {
 
 
 // New Route
-app.get("/listings/new" , (req , res) => {
-    res.render("listing/new.ejs");
+app.get("/listings/new" , async (req , res) => {
+    const states = await State.find({});
+    res.render("listing/new.ejs" , {states});
 });
 
 
@@ -67,9 +66,7 @@ app.get("/listings/search" , async (req , res) => {
         const normalizedState = state.trim();
         const stateDoc = await State.findOne({
             name: new RegExp(`^${normalizedState}$`, "i")  // i -> case insenstive  ^ (caret) -> Start of the string  $(dollar)-> End of the string
-        });
-
-        
+        });        
         if (!stateDoc) {
             return res.redirect("/listings");
         }

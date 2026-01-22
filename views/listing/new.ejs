@@ -1,123 +1,136 @@
 <% layout("layouts/boilerplate") %>
 
 <style>
-    /* Reset */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-    }
 
-    /* Page background */
-    .form-page {
-        min-height: 100vh;
-        background: linear-gradient(
-            rgba(0, 0, 0, 0.45),
-            rgba(0, 0, 0, 0.45)
-        ),
-        url("https://images.unsplash.com/photo-1501785888041-af3ef285b470") center/cover no-repeat;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 
-    /* Card */
-    .form-card {
-        width: 100%;
-        max-width: 520px;
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 16px;
-        padding: 32px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    }
+.form-page {
+  min-height: calc(100vh - 90px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+}
 
-    /* Title */
-    .form-title {
-        font-size: 28px;
-        font-weight: 600;
-        text-align: center;
-        margin-bottom: 6px;
-    }
 
-    .form-subtitle {
-        font-size: 14px;
-        color: #666;
-        text-align: center;
-        margin-bottom: 24px;
-    }
+.form-card {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(6px);
+  border-radius: 18px;
+  padding: 34px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.12),
+    0 4px 10px rgba(0, 0, 0, 0.05);
+}
 
-    /* Form */
-    .listing-form {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
 
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
+.form-title {
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
 
-    .form-group label {
-        font-size: 13px;
-        font-weight: 500;
-        margin-bottom: 6px;
-        color: #333;
-    }
+.form-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  text-align: center;
+  margin-bottom: 26px;
+}
 
-    .form-group input,
-    .form-group textarea {
-        padding: 12px 14px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
-        font-size: 14px;
-        outline: none;
-        transition: all 0.2s ease;
-    }
 
-    .form-group input:focus,
-    .form-group textarea:focus {
-        border-color: #1e90ff;
-        box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.15);
-    }
+.listing-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
 
-    /* Two-column row */
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-    }
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
 
-    /* Button */
-    .submit-btn {
-        margin-top: 10px;
-        padding: 14px;
-        border-radius: 12px;
-        border: none;
-        background: linear-gradient(135deg, #1e90ff, #00bcd4);
-        color: white;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #334155;
+}
 
-    .submit-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-    }
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  outline: none;
+  background: #ffffff;
+  transition: all 0.25s ease;
+}
 
-    /* Responsive */
-    @media (max-width: 480px) {
-    .form-row {
-            grid-template-columns: 1fr;
-        }
-    }
+.form-group textarea {
+  resize: vertical;
+  min-height: 90px;
+}
 
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+
+.submit-btn {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #0ea5e9, #22d3ee);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(14, 165, 233, 0.35);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(14, 165, 233, 0.25);
+}
+
+
+@media (max-width: 520px) {
+  .form-card {
+    padding: 26px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
-
 
 <div class="form-page">
   <div class="form-card">
@@ -126,21 +139,25 @@
 
     <form action="/listings" method="POST" class="listing-form">
 
+      <!-- TITLE -->
       <div class="form-group">
         <label>Title *</label>
         <input type="text" name="listing[title]" placeholder="Mountain View Camp" required>
       </div>
 
+      <!-- DESCRIPTION -->
       <div class="form-group">
         <label>Description</label>
-        <textarea name="listing[description]" rows="3" placeholder="A peaceful stay surrounded by nature..."></textarea>
+        <textarea name="listing[description]" placeholder="A peaceful stay surrounded by nature..." ></textarea>
       </div>
 
+      <!-- IMAGE -->
       <div class="form-group">
         <label>Image URL</label>
         <input type="text" name="listing[img]" placeholder="Leave empty for default image">
       </div>
 
+      <!-- PRICE + COUNTRY -->
       <div class="form-row">
         <div class="form-group">
           <label>Price (₹)</label>
@@ -149,13 +166,27 @@
 
         <div class="form-group">
           <label>Country</label>
-          <input type="text" name="listing[country]" placeholder="India">
+          <input type="text" name="listing[country]" value="India">
         </div>
       </div>
 
+      <!-- STATE (REQUIRED) -->
       <div class="form-group">
-        <label>Location</label>
-        <input type="text" name="listing[location]" placeholder="Manali, Himachal Pradesh">
+        <label>State *</label>
+        <select name="listing[state]" required>
+          <option value="">Select State</option>
+          <% states.forEach(state => { %>
+            <option value="<%= state._id %>">
+            <%= state.name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- CITY -->
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" name="listing[city]" placeholder="Enter city">
       </div>
 
       <button class="submit-btn">Create Listing</button>
