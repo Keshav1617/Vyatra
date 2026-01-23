@@ -3,10 +3,16 @@ const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const path = require("path");
 const mongoose = require("mongoose");
+
 const Post = require("./models/post");
 const Listing = require("./models/listing");
 const NatureEntity = require("./models/natureEntity");
 const State = require("./models/state");
+
+const WrapAsync = require("./utils/wrapAsync");
+const ExpressError = require("./utils/ExpressError");
+const wrapAsync = require("./utils/wrapAsync");
+const { ListingSchema } = require("./Schema");
 
 const app = express();
 const port = 8080;
@@ -33,32 +39,42 @@ async function main() {
 }
 
 
+// Validation Schema Middleware
+const validateListing = (req , res , next) => {
+    let result = ListingSchema.validate(req.body);
+    if(result.error){
+        throw new ExpressError(400 , "Send Valid data for listing");
+    }
+    else{
+        next();
+    }
+};
+
 // Listing
 // index Route
-app.get("/listings" , async(req , res) => {
+app.get("/listings" , WrapAsync(async(req , res , next) => {
     let alllistings = await Listing.find({});
     res.render("listing/index.ejs" , {alllistings});
-});
+}));
 
 
 // New Route
-app.get("/listings/new" , async (req , res) => {
+app.get("/listings/new" , WrapAsync(async (req , res , next) => {
     const states = await State.find({});
     res.render("listing/new.ejs" , {states});
-});
+}));
 
 
 // Create Route 
-app.post("/listings" , async (req , res) => {
+app.post("/listings" , validateListing , WrapAsync(async (req , res , next) => {
     let newlisting = new Listing(req.body.listing);
     await newlisting.save();
     res.redirect("/listings");
-});
+}));
 
 
 // Search Route
-app.get("/listings/search" , async (req , res) => {
-    try{
+app.get("/listings/search" , WrapAsync(async (req , res , next) => {
         const {state} = req.query;
         if(!state){
             return res.redirect("/listings");
@@ -72,46 +88,40 @@ app.get("/listings/search" , async (req , res) => {
         }
         const listings = await Listing.find({ state : stateDoc._id}).populate("state");
         res.render("listing/search.ejs" , {listings , searchedState : stateDoc.name });
-
-    }catch(err){
-        console.error(err);
-        req.flash("error", "Something went wrong");
-        res.redirect("/listings");
-    }
-});
+}));
 
 
 // show Route
-app.get("/listings/:id" , async (req , res) => {
+app.get("/listings/:id" , WrapAsync(async (req , res , next) => {
     let {id} = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {  // whenever use findById always check if the comming id is a valid id for mongoose or not.
         return res.status(404).send("Listing not found");
     }
     let listing = await Listing.findById(id); 
     res.render("listing/show.ejs" , {listing});
-});
+}));
 
 
 // Edit Route
-app.get("/listings/:id/edit" , async (req , res) => {
+app.get("/listings/:id/edit" , WrapAsync(async (req , res , next) => {
     let {id} = req.params;
     const listing = await Listing.findById(id);
-    res.render("listing/edit.ejs" , {listing});
-});
+    const states = await State.find({});
+    res.render("listing/edit.ejs" , {listing , states});
+}));
 
 // update Route
-app.put("/listings/:id" , async(req,res) => {
-    let {id} = req.params;
+app.put("/listings/:id",validateListing , WrapAsync(async(req,res , next) => {
     let updatedListing = await Listing.findByIdAndUpdate(id , req.body.listing , {runValidators : true , new : true});
     res.redirect("/listings");
-});
+}));
 
 // destroy Route
-app.delete("/listings/:id" , async(req , res) => {
+app.delete("/listings/:id" , WrapAsync(async(req , res , next) => {
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
-})
+}));
 
 
 
@@ -126,52 +136,65 @@ app.delete("/listings/:id" , async(req , res) => {
 
 // posts
 // Index Route
-app.get("/posts" , async (req , res) =>{
+app.get("/posts" , WrapAsync(async (req , res , next) =>{
     let posts = await Post.find();
     res.render("posts/index.ejs" , {posts});
-})
+}));
 
 // New Route
-app.get("/posts/new" , (req , res) => {
+app.get("/posts/new" , wrapAsync((req , res , next) => {
     res.render("posts/new.ejs");
-})
+}));
 
 // Create Route
-app.post("/posts" , async (req , res) => {
+app.post("/posts" , WrapAsync(async (req , res , next) => {
     let newpost = new Post(req.body.post);
     await newpost.save();
     res.redirect("/posts");
-});
+}));
 
 
 // Edit Route
-app.get("/posts/:id/edit" , async (req , res) => {
+app.get("/posts/:id/edit" , wrapAsync(async (req , res , next) => {
     let {id} = req.params;
     let post = await Post.findById(id);
     if (!post) {
         return res.status(404).send("Post not found");
     }
     res.render("posts/edit.ejs" , {post});
-})
+}));
 
 
 // Update Route
-app.put("/posts/:id" , async (req , res) => {
+app.put("/posts/:id" , WrapAsync(async (req , res , next) => {
     let {id} = req.params;
     let updatedpost = await Post.findByIdAndUpdate(id , req.body.post , {runValidators : true , new : true});
     if (!updatedpost) {
         return res.status(404).send("Post not found");
     }
     res.redirect("/posts");
-})
+}));
 
 
 // Destroy Route
-app.delete("/posts/:id" , async (req , res) => {
+app.delete("/posts/:id" , WrapAsync(async (req , res , next) => {
     let {id}= req.params;
     let deletedpost = await Post.findByIdAndDelete(id);
     res.redirect("/posts");
+}));
+
+
+// all path error handler
+app.use((req, res , next) => {  // throws error if no route matches
+    next(new ExpressError(404 , "Page Not Found!"))
 })
+
+// Global error handler
+app.use((err , req , res, next) => {  // catches the error and deconstruct it and then send res
+    const statusCode = err.statusCode || 500;
+    const message = err.message || "Something went Wrong";
+    res.status(statusCode).render("listing/error.ejs", {statusCode , message});
+})  
 
 app.listen(port , () => {
     console.log(`Server is listening on port : ${port}`);

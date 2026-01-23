@@ -10,13 +10,6 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #0f172a;
-  padding-top: 90px;
-
-  
-}
 
 /* =========================
    NAVBAR
@@ -68,6 +61,7 @@ body {
 .navbar-nav .nav-link.active {
   color: #0284c7;
 }
+
 
 /* SEARCH */
 .navbar-search {
@@ -314,16 +308,25 @@ body {
 .about-card {
   padding: 18px 20px;
   border-radius: 16px;
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(15,23,42,0.08);
-  box-shadow: 0 10px 24px rgba(15,23,42,0.08);
+
+  background: linear-gradient(
+    180deg,
+    rgba(236, 253, 245, 0.95),
+    rgba(209, 250, 229, 0.9)
+  );
+
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12);
+
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .about-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 36px rgba(15,23,42,0.12);
+  box-shadow:
+    0 20px 44px rgba(15, 23, 42, 0.16),
+    0 0 0 1px rgba(16, 185, 129, 0.25);
 }
 
 .about-card h4 {
