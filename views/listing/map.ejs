@@ -1,0 +1,16 @@
+<% layout("layouts/boilerplate") %>
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet/dist/leaflet.css"
+/>
+
+<div style="display:flex;">
+  <input id="stateInput" placeholder="Search state..." />
+  <button onclick="searchState()">Search</button>
+</div>
+
+<div id="map" style="height:90vh;"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="/Javascript/map.js"></script>

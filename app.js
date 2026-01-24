@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 const listings = require("./routes/listing");
 const posts = require("./routes/posts");
+const mapRoutes = require("./routes/map");
 
 const ExpressError = require("./utils/ExpressError");
 
@@ -37,6 +38,8 @@ async function main() {
 app.use("/listings" , listings);
 
 app.use("/posts" , posts);
+
+app.use("/api/map" , mapRoutes);  // (/api/map/kerala → JSON)
 
 
 // all path error handler

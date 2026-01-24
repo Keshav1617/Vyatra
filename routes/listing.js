@@ -59,6 +59,11 @@ router.get("/search" , WrapAsync(async (req , res , next) => {
         res.render("listing/search.ejs" , {listings , searchedState : stateDoc.name });
 }));
 
+// Map Route
+router.get("/map" , (req , res) => {
+    res.render("listing/map.ejs");
+});
+
 
 // show Route
 router.get("/:id" , WrapAsync(async (req , res , next) => {
