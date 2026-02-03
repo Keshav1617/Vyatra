@@ -4,6 +4,9 @@ const methodOverride = require("method-override");
 const path = require("path");
 const mongoose = require("mongoose");
 
+const session = require("express-session");
+const flash = require("connect-flash");
+
 const listings = require("./routes/listing");
 const posts = require("./routes/posts");
 const mapRoutes = require("./routes/map");
@@ -12,6 +15,16 @@ const ExpressError = require("./utils/ExpressError");
 
 const app = express();
 const port = 8080;
+const sessionOptions = {
+    secret : "MysuperSecretCode",
+    resave : false,
+    saveUninitialized: true,
+    cookie: {
+        // expires: Date.now() + 7*24*60*60*1000, // data in miliseconds 
+        maxAge : 7*24*60*60*1000,  
+        httpOnly : true, // to prevent from attacks
+    }
+};
 
 app.engine("ejs" , ejsMate);
 app.set("view engine" , "ejs");
@@ -21,6 +34,9 @@ app.use(express.static(path.join(__dirname , "public")));
 app.use(express.urlencoded({extended :true}));
 app.use(express.json());
 app.use(methodOverride("_method"));
+
+app.use(session(sessionOptions));
+app.use(flash());
 
 main()
     .then(() => {
@@ -33,6 +49,12 @@ main()
 async function main() {
     await mongoose.connect("mongodb://127.0.0.1:27017/Vyatra");
 }
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success") || [];
+  res.locals.error = req.flash("error") || [];
+  next();
+});
 
 
 app.use("/listings" , listings);

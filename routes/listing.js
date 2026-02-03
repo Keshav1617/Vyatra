@@ -38,6 +38,7 @@ router.get("/new" , WrapAsync(async (req , res , next) => {
 router.post("/" , validateListing , WrapAsync(async (req , res , next) => {
     let newlisting = new Listing(req.body.listing);
     await newlisting.save();
+    req.flash("success" , "New Listing Created");
     res.redirect("/listings");
 }));
 
@@ -59,6 +60,7 @@ router.get("/search" , WrapAsync(async (req , res , next) => {
         res.render("listing/search.ejs" , {listings , searchedState : stateDoc.name });
 }));
 
+
 // Map Route
 router.get("/map" , (req , res) => {
     res.render("listing/map.ejs");
@@ -72,6 +74,10 @@ router.get("/:id" , WrapAsync(async (req , res , next) => {
         return res.status(404).send("Listing not found");
     }
     let listing = await Listing.findById(id); 
+    if(!listing){
+        req.flash("error" , "Listing Doesn't Exist");
+        return res.redirect("/listings");
+    }
     res.render("listing/show.ejs" , {listing});
 }));
 
@@ -81,12 +87,18 @@ router.get("/:id/edit" , WrapAsync(async (req , res , next) => {
     let {id} = req.params;
     const listing = await Listing.findById(id);
     const states = await State.find({});
+    if(!listing){
+        req.flash("error" , "Listing Doesn't Exist");
+        return res.redirect("/listings");
+    }
     res.render("listing/edit.ejs" , {listing , states});
 }));
 
 // update Route
 router.put("/:id",validateListing , WrapAsync(async(req,res , next) => {
+    const { id } = req.params;
     let updatedListing = await Listing.findByIdAndUpdate(id , req.body.listing , {runValidators : true , new : true});
+    req.flash("success" , "Listing Updated");
     res.redirect("/listings");
 }));
 
@@ -94,6 +106,7 @@ router.put("/:id",validateListing , WrapAsync(async(req,res , next) => {
 router.delete("/:id" , WrapAsync(async(req , res , next) => {
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
+    req.flash("success" , "Listing Deleted");
     res.redirect("/listings");
 }));
 

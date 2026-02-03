@@ -54,5 +54,4 @@ router.delete("/:id" , WrapAsync(async (req , res , next) => {
     res.redirect("/posts");
 }));
 
-
 module.exports = router;

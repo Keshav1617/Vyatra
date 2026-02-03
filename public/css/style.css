@@ -207,6 +207,79 @@ section {
   background: transparent;
 }
 
+/* ===== FLASH MESSAGE (CUSTOM) ===== */
+
+.flash-container {
+  position: fixed;
+  top: 110px;
+  right: 24px;
+  z-index: 99999;
+}
+
+.flash-toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 280px;
+  max-width: 360px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+  animation: flashIn 0.35s ease-out;
+}
+
+.flash-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.flash-message {
+  flex: 1;
+}
+
+.flash-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.flash-close:hover {
+  opacity: 1;
+}
+
+.flash-hide {
+  animation: flashOut 0.35s ease-in forwards;
+}
+
+.flash-toast-error {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+
+@keyframes flashIn {
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes flashOut {
+  to {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+}
+
 
 /* =========================
    FOOTER

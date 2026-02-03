@@ -366,59 +366,58 @@
 
 </style>
 
+<section class="listing-section">
+    <div class="section-header">
+        <h2 class="section-title">
+            Popular stays <span class="arrow">›</span>
+        </h2>
 
-    <section class="listing-section">
-        <div class="section-header">
-            <h2 class="section-title">
-                Popular stays <span class="arrow">›</span>
-            </h2>
-
-            <form action="/listings/new">
-                <button> Create Listing</button>
-            </form>
-        </div>
+        <form action="/listings/new">
+            <button> Create Listing</button>
+        </form>
+    </div>
 
 
-        <div class="listing-container">
+    <div class="listing-container">
 
-            <% alllistings.forEach(listing=> { %>
-                <a href="/listings/<%=listing._id%>" class="listing-link">
+        <% alllistings.forEach(listing=> { %>
+            <a href="/listings/<%=listing._id%>" class="listing-link">
 
-                    <div class="listing-card">
-                        <div class="image-wrapper">
+                <div class="listing-card">
+                    <div class="image-wrapper">
 
-                            <% if (listing.rating>= 4.8) { %>
-                                <span class="badge">Guest favourite</span>
-                                <% } %>
+                        <% if (listing.rating>= 4.8) { %>
+                            <span class="badge">Guest favourite</span>
+                            <% } %>
 
-                                    <span class="heart">♡</span>
+                                <span class="heart">♡</span>
 
-                                    <img src="<%= listing.img %>" alt="<%= listing.title %>" loading="lazy">
-                        </div>
-
-                        <div class="card-content">
-                            <h3>
-                                <%= listing.title %>
-                            </h3>
-
-                            <p class="location">
-                                <%= listing.location %>, <%= listing.country %>
-                            </p>
-
-                            <p class="price">
-                                ₹<%= listing.price %>
-                                    <span>for 2 nights</span>
-                            </p>
-
-                            <p class="rating">
-                                ★ <%= listing.rating || "New" %>
-                            </p>
-                        </div>
+                                <img src="<%= listing.img %>" alt="<%= listing.title %>" loading="lazy">
                     </div>
-                </a>
-                <% }) %>
-        </div>
-    </section>
+
+                    <div class="card-content">
+                        <h3>
+                            <%= listing.title %>
+                        </h3>
+
+                        <p class="location">
+                            <%= listing.location %>, <%= listing.country %>
+                        </p>
+
+                        <p class="price">
+                            ₹<%= listing.price %>
+                                <span>for 2 nights</span>
+                        </p>
+
+                        <p class="rating">
+                            ★ <%= listing.rating || "New" %>
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <% }) %>
+    </div>
+</section>
 
 <section class="about-section">
 
