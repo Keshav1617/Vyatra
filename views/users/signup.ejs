@@ -1,0 +1,109 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+/* ===== Auth Page Layout ===== */
+
+.auth-wrapper {
+  min-height: calc(100vh - 140px); /* navbar + footer space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* Card width control */
+.auth-card {
+  width: 100%;
+  max-width: 420px; /* 🔑 THIS fixes “too broad” */
+  background: #ffffff;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Inputs */
+.auth-card .form-control {
+  height: 48px;
+  border-radius: 10px;
+}
+
+/* Button */
+.auth-card .btn-success {
+  height: 48px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  border: none;
+  font-weight: 500;
+}
+
+.auth-card .btn-success:hover {
+  opacity: 0.95;
+}
+
+
+</style>
+
+<% layout("layouts/boilerplate") %>
+
+<section class="auth-wrapper">
+  <div class="auth-card">
+
+    <h2 class="text-center fw-bold mb-1">
+      Join Vyatra <span class="leaf">🌿</span>
+    </h2>
+
+    <p class="text-center text-muted mb-4">
+      Start exploring nature with us
+    </p>
+
+    <form action="/signup" method="POST" class="needs-validation" novalidate>
+
+      <!-- Full Name -->
+      <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input
+          type="text"
+          name="fullName"
+          class="form-control"
+          placeholder="Enter your full name"
+          required
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email address</label>
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="form-label">Password</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Create a strong password"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn btn-success w-100">
+        Create Account
+      </button>
+    </form>
+
+    <p class="text-center mt-4 mb-0 small">
+      Already have an account?
+      <a href="/login" class="fw-semibold text-decoration-none">Login</a>
+    </p>
+
+  </div>
+</section>
+

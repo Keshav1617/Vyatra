@@ -8,6 +8,8 @@ const mongoose = require("mongoose");
 const { ListingSchema } = require("../Schema");
 const Listing = require("../models/listing");
 const State = require("../models/state");
+const passport = require("passport");
+const {isLoggedIn} = require("../middleware.js");
 
 // Validation Schema Middleware
 const validateListing = (req , res , next) => {
@@ -28,14 +30,14 @@ router.get("/" , WrapAsync(async(req , res , next) => {
 
 
 // New Route
-router.get("/new" , WrapAsync(async (req , res , next) => {
+router.get("/new" , isLoggedIn , WrapAsync(async (req , res , next) => {
     const states = await State.find({});
     res.render("listing/new.ejs" , {states});
 }));
 
 
 // Create Route 
-router.post("/" , validateListing , WrapAsync(async (req , res , next) => {
+router.post("/" , validateListing , isLoggedIn , WrapAsync(async (req , res , next) => {
     let newlisting = new Listing(req.body.listing);
     await newlisting.save();
     req.flash("success" , "New Listing Created");
@@ -83,7 +85,7 @@ router.get("/:id" , WrapAsync(async (req , res , next) => {
 
 
 // Edit Route
-router.get("/:id/edit" , WrapAsync(async (req , res , next) => {
+router.get("/:id/edit" , isLoggedIn , WrapAsync(async (req , res , next) => {
     let {id} = req.params;
     const listing = await Listing.findById(id);
     const states = await State.find({});
@@ -103,7 +105,7 @@ router.put("/:id",validateListing , WrapAsync(async(req,res , next) => {
 }));
 
 // destroy Route
-router.delete("/:id" , WrapAsync(async(req , res , next) => {
+router.delete("/:id" , isLoggedIn , WrapAsync(async(req , res , next) => {
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     req.flash("success" , "Listing Deleted");

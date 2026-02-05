@@ -1,0 +1,162 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+    /* =========================
+   AUTH PAGES (LOGIN / SIGNUP)
+   ========================= */
+
+.auth-wrapper {
+  min-height: calc(100vh - 140px); /* navbar + footer height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* Auth Card */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 2.5rem 2rem;
+  border-radius: 18px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+}
+
+/* Heading */
+.auth-card h2 {
+  font-size: 1.7rem;
+  color: #1f2937;
+}
+
+.auth-card p {
+  font-size: 0.95rem;
+}
+
+/* Inputs */
+.auth-card .form-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.auth-card .form-control {
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+  padding: 0.6rem 0.9rem;
+}
+
+/* Focus */
+.auth-card .form-control:focus {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 0.15rem rgba(34, 197, 94, 0.25);
+}
+
+/* Validation States */
+.form-control.is-valid {
+  border-color: #16a34a;
+  padding-right: 2.25rem;
+}
+
+.form-control.is-invalid {
+  border-color: #dc2626;
+  padding-right: 2.25rem;
+}
+
+/* Feedback text */
+.valid-feedback,
+.invalid-feedback {
+  font-size: 0.8rem;
+}
+
+/* Button */
+.auth-card .btn-success {
+  height: 48px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.auth-card .btn-success:hover {
+  opacity: 0.95;
+}
+
+/* Links */
+.auth-card a {
+  color: #16a34a;
+}
+
+.auth-card a:hover {
+  text-decoration: underline;
+}
+
+/* Flash Alerts */
+.alert {
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+</style>
+
+
+<section class="auth-wrapper">
+  <div class="auth-card">
+
+    <h2 class="text-center fw-bold mb-1">
+      Welcome Back to Vyatra <span class="leaf">🌿</span>
+    </h2>
+
+    <p class="text-center text-muted mb-4">
+      Continue your journey with us
+    </p>
+
+    <form action="/login" method="POST" id="loginForm" class="needs-validation" novalidate>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email address</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="form-control"
+          placeholder="you@gmail.com"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Enter a valid email address</div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="form-label">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          class="form-control"
+          placeholder="Enter your password"
+          required
+        />
+        <div class="invalid-feedback">Password is required</div>
+      </div>
+
+      <button type="submit" class="btn btn-success w-100">
+        Login
+      </button>
+
+    </form>
+
+    <p class="text-center mt-4 mb-0 small">
+      Don’t have an account?
+      <a href="/signup" class="fw-semibold text-decoration-none">
+        Create one
+      </a>
+    </p>
+
+  </div>
+</section>

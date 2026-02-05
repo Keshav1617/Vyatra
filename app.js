@@ -6,9 +6,14 @@ const mongoose = require("mongoose");
 
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 
-const listings = require("./routes/listing");
-const posts = require("./routes/posts");
+const User = require("./models/user");
+
+const listingRouter = require("./routes/listing");
+const postsRouter = require("./routes/posts");
+const userRouter = require("./routes/user");
 const mapRoutes = require("./routes/map");
 
 const ExpressError = require("./utils/ExpressError");
@@ -38,6 +43,13 @@ app.use(methodOverride("_method"));
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy({ usernameField: "email" },User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 main()
     .then(() => {
         console.log("DB Connected Successfully");
@@ -56,10 +68,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/listings" , listingRouter);
 
-app.use("/listings" , listings);
+app.use("/posts" , postsRouter);
 
-app.use("/posts" , posts);
+app.use("/" , userRouter);
 
 app.use("/api/map" , mapRoutes);  // (/api/map/kerala → JSON)
 
